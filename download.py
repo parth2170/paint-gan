@@ -16,9 +16,13 @@ def read(path):
 	with open(path) as file:
 		i = 0
 		for line in file:
-			url = line[10:-13]
+			url = line[10:-14]
 			i += 1
 			down(url, savepath+'/'+str(i)+'.jpg')
 
 if __name__ == '__main__':
-	read('bam/content_bird.htm')
+	files = os.listdir('bam/')
+	for file in files:
+		if file[-3:] != 'htm':
+			continue
+		read('bam/'+file)
