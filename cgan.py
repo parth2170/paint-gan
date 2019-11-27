@@ -1,11 +1,12 @@
 # example of training an conditional gan on the fashion mnist dataset
+import os
 import numpy as np
 from numpy import expand_dims
 from numpy import zeros
 from numpy import ones
 from numpy.random import randn
 from numpy.random import randint
-from loadData import load_data
+from loadData import load_data, read_data
 from keras.optimizers import Adam
 from keras.models import Model
 from keras.layers import Input
@@ -105,7 +106,11 @@ def define_gan(g_model, d_model):
 # load fashion mnist images
 def load_real_samples():
 	# load dataset
-	(trainX, trainy), (_, _) = load_data()
+	files = os.listdir('.')
+	if 'train_images.pkl' not in files:
+		(trainX, trainy), (_, _) = read_data()
+	else:
+		(trainX, trainy), (_, _) = load_data()
 	# expand to 3d, e.g. add channels
 	X = expand_dims(trainX, axis=-1)
 	# convert from ints to floats
