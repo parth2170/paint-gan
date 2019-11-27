@@ -7,6 +7,8 @@ listFolders = os.listdir('down/')
 train_images = []
 train_labels = []
 
+classes = ['content_dog', 'content_cat', 'emotion_gloomy', 'emotion_scary', 'media_3d_graphics', 'media_comic', 'media_graphite', 'media_watercolor', 'content_people', 'content_cars']
+
 def load_data():
   for label in listFolders:
     if label == '.gitignore' or label == '.DS_Store':
