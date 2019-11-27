@@ -1,10 +1,11 @@
 # example of training an conditional gan on the fashion mnist dataset
+import numpy as np
 from numpy import expand_dims
 from numpy import zeros
 from numpy import ones
 from numpy.random import randn
 from numpy.random import randint
-from keras.datasets.fashion_mnist import load_data
+from loadData import load_data
 from keras.optimizers import Adam
 from keras.models import Model
 from keras.layers import Input
@@ -19,7 +20,7 @@ from keras.layers import Embedding
 from keras.layers import Concatenate
 
 # define the standalone discriminator model
-def define_discriminator(in_shape=(28,28,1), n_classes=10):
+def define_discriminator(in_shape=(28,28,3), n_classes=10):
 	# label input
 	in_label = Input(shape=(1,))
 	# embedding for categorical input
@@ -79,7 +80,7 @@ def define_generator(latent_dim, n_classes=10):
 	gen = Conv2DTranspose(128, (4,4), strides=(2,2), padding='same')(gen)
 	gen = LeakyReLU(alpha=0.2)(gen)
 	# output
-	out_layer = Conv2D(1, (7,7), activation='tanh', padding='same')(gen)
+	out_layer = Conv2D(3, (7,7), activation='tanh', padding='same')(gen)
 	# define model
 	model = Model([in_lat, in_label], out_layer)
 	return model
