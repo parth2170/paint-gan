@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 from PIL import Image
 import pickle
+from tqdm import tqdm
 
 listFolders = os.listdir('down/')
 train_images = []
@@ -12,9 +13,9 @@ classes = ['content_dog', 'content_cat', 'emotion_gloomy', 'emotion_scary', 'med
 
 def read_data():
   for label in listFolders:
-    if label == '.gitignore' or label == '.DS_Store':
+    if label not in classes:
       continue 
-    for image in os.listdir('down/'+label):
+    for image in tqdm(os.listdir('down/'+label)):
       img = cv2.imread('down/'+label+'/'+image)
       try:
         img = cv2.resize(img, (28,28))
